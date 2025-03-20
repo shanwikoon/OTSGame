@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Digital Dining Management Challenge</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .page {
+      margin-bottom: 40px;
+    }
+    .draggable {
+      padding: 8px;
+      margin: 5px;
+      background-color: #d9edf7;
+      border: 1px solid #31708f;
+      cursor: move;
+      width: fit-content;
+    }
+    .drag-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+    .drop-zone {
+      padding: 10px;
+      margin: 5px;
+      background-color: #f7f7f7;
+      border: 2px dashed #ccc;
+      min-width: 240px;
+      min-height: 40px;
+      text-align: center;
+    }
+    button {
+      margin: 10px 5px;
+      padding: 8px 16px;
+    }
+    h1.big-title {
+      font-size: 3em;
+      text-align: center;
+      margin-bottom: 0;
+    }
+    h2.subtitle {
+      font-size: 1.5em;
+      text-align: center;
+      margin-top: 0;
+      color: #555;
+    }
+    h1.game-title {
+      font-size: 2.5em;
+      text-align: center;
+      margin-top: 20px;
+      color: #2a6496;
+    }
+  </style>
+</head>
+<body>
+  <!-- Introduction Page -->
+  <div id="intro" class="page">
+    <h1 class="big-title">LSST LEARNING GAMES</h1>
+    <h2 class="subtitle">By Shan Wikoon</h2>
+    <h1 class="game-title">Digital Dining Management Challenge</h1>
+    <p>Welcome! In this game you act as a digital strategy consultant for TechTaste Restaurants—a medium‐sized restaurant chain using digital technologies at three management levels:</p>
+    <ul>
+      <li><strong>Operational Management:</strong> Day-to-day activities to keep the restaurant running smoothly.</li>
+      <li><strong>Tactical Management:</strong> Process optimisation and medium-term planning.</li>
+      <li><strong>Strategic Management:</strong> Long-term planning and growth initiatives.</li>
+    </ul>
+    <p>The game is divided into three sections (each with four tasks that become more challenging). Some tasks require drag‐and‐drop matching and others are multiple choice questions. Each correct answer awards +10 points while an incorrect answer deducts –5 points.</p>
+    <button onclick="goToPage('operational')">Start Challenge</button>
+  </div>
+
+  <!-- Operational Management Page -->
+  <div id="operational" class="page" style="display:none;">
+    <h2>Operational Management</h2>
+    <!-- Task 1: Peak Hour Chaos (Drag-and-Drop Matching) -->
+    <div id="op-task1">
+      <h3>Task 1: Peak Hour Chaos</h3>
+      <p>During the busy lunch rush, TechTaste deploys digital tools to resolve operational challenges. Drag each digital tool to the operational challenge it addresses.</p>
+      <div class="drag-container" id="drag-items-op1"></div>
+      <div class="drag-container" id="drop-zones-op1">
+        <div class="drop-zone" data-match="Digital Queue Manager">Reduces waiting times by managing queues</div>
+        <div class="drop-zone" data-match="Mobile Ordering App">Directly captures orders to minimise errors</div>
+        <div class="drop-zone" data-match="Automated Kitchen Ticketing">Improves communication between front-of-house and kitchen</div>
+        <div class="drop-zone" data-match="Real-Time Inventory Alerts">Alerts staff to low stock levels to prevent shortages</div>
+      </div>
+      <p id="feedback-op1"></p>
+    </div>
+
+    <!-- Task 2: Order Processing Efficiency (Multiple Choice) -->
+    <div id="op-task2">
+      <h3>Task 2: Order Processing Efficiency</h3>
+      <p>TechTaste recently adopted an online ordering system to speed up service. What is the most immediate benefit of using the online ordering system?</p>
+      <form id="op-q2-form"></form>
+      <p id="feedback-op2"></p>
+    </div>
+
+    <!-- Task 3: Role Assignment in Operations (Drag-and-Drop Matching) -->
+    <div id="op-task3">
+      <h3>Task 3: Role Assignment in Operations</h3>
+      <p>Each digital tool plays a specific role in daily operations. Drag each tool to its primary role.</p>
+      <div class="drag-container" id="drag-items-op3"></div>
+      <div class="drag-container" id="drop-zones-op3">
+        <div class="drop-zone" data-match="Self-Service Kiosk">Facilitates order placement</div>
+        <div class="drop-zone" data-match="Online Ordering System">Confirms orders and communicates with the kitchen</div>
+        <div class="drop-zone" data-match="Digital Inventory Monitor">Monitors stock levels in real time</div>
+        <div class="drop-zone" data-match="Smart Payment Terminal">Processes payments swiftly</div>
+      </div>
+      <p id="feedback-op3"></p>
+    </div>
+
+    <!-- Task 4: Consequence Analysis (Multiple Choice) -->
+    <div id="op-task4">
+      <h3>Task 4: Consequence Analysis</h3>
+      <p>If the Digital Inventory Monitor fails during service, what is the most likely immediate consequence?</p>
+      <form id="op-q4-form"></form>
+      <p id="feedback-op4"></p>
+    </div>
+    
+    <button onclick="checkOperationalPage()">Submit All Tasks</button>
+    <br>
+    <button onclick="goToPage('tactical')">Next: Tactical Management</button>
+  </div>
+
+  <!-- Tactical Management Page -->
+  <div id="tactical" class="page" style="display:none;">
+    <h2>Tactical Management</h2>
+    <!-- Task 1: Optimizing Reservations (Drag-and-Drop Matching) -->
+    <div id="ta-task1">
+      <h3>Task 1: Optimizing Reservations</h3>
+      <p>TechTaste uses a digital reservation system to improve seating efficiency. Drag each feature to the tactical benefit it delivers.</p>
+      <div class="drag-container" id="drag-items-ta1"></div>
+      <div class="drag-container" id="drop-zones-ta1">
+        <div class="drop-zone" data-match="Automated Reservation Confirmations">Reduces no-shows with timely reminders</div>
+        <div class="drop-zone" data-match="Virtual Waitlist">Manages walk-in wait times effectively</div>
+        <div class="drop-zone" data-match="Table Turnover Analytics">Provides data to optimise staff scheduling</div>
+        <div class="drop-zone" data-match="Feedback Integration">Improves service quality through real-time feedback</div>
+      </div>
+      <p id="feedback-ta1"></p>
+    </div>
+
+    <!-- Task 2: Predicting Peak Times (Multiple Choice) -->
+    <div id="ta-task2">
+      <h3>Task 2: Predicting Peak Times</h3>
+      <p>Using data analytics, TechTaste predicts peak dining times. Which tactical advantage is achieved through this?</p>
+      <form id="ta-q2-form"></form>
+      <p id="feedback-ta2"></p>
+    </div>
+
+    <!-- Task 3: Enhancing Customer Loyalty (Drag-and-Drop Matching) -->
+    <div id="ta-task3">
+      <h3>Task 3: Enhancing Customer Loyalty</h3>
+      <p>TechTaste’s CRM tool supports its loyalty programme. Drag each CRM feature to the benefit it offers.</p>
+      <div class="drag-container" id="drag-items-ta3"></div>
+      <div class="drag-container" id="drop-zones-ta3">
+        <div class="drop-zone" data-match="Customer Purchase History">Enables targeted promotions</div>
+        <div class="drop-zone" data-match="Automated Feedback Requests">Identifies areas for service improvement</div>
+        <div class="drop-zone" data-match="Loyalty Points Tracker">Encourages repeat visits through rewards</div>
+        <div class="drop-zone" data-match="Personalised Offer Engine">Optimises promotion effectiveness</div>
+      </div>
+      <p id="feedback-ta3"></p>
+    </div>
+
+    <!-- Task 4: Digital Menu Boards Impact (Multiple Choice) -->
+    <div id="ta-task4">
+      <h3>Task 4: Digital Menu Boards Impact</h3>
+      <p>Digital Menu Boards influence customer choices in real time. What tactical benefit do they primarily provide?</p>
+      <form id="ta-q4-form"></form>
+      <p id="feedback-ta4"></p>
+    </div>
+    
+    <button onclick="checkTacticalPage()">Submit All Tasks</button>
+    <br>
+    <button onclick="goToPage('strategic')">Next: Strategic Management</button>
+    <br>
+    <button onclick="goToPage('operational')">Back: Operational Management</button>
+  </div>
+
+  <!-- Strategic Management Page -->
+  <div id="strategic" class="page" style="display:none;">
+    <h2>Strategic Management</h2>
+    <!-- Task 1: Expanding Market Reach (Drag-and-Drop Matching) -->
+    <div id="st-task1">
+      <h3>Task 1: Expanding Market Reach</h3>
+      <p>TechTaste is expanding its market using digital marketing. Drag each strategic initiative to the long-term benefit it is meant to achieve.</p>
+      <div class="drag-container" id="drag-items-st1"></div>
+      <div class="drag-container" id="drop-zones-st1">
+        <div class="drop-zone" data-match="Digital Marketing Campaign">Attracts new customers and expands market reach</div>
+        <div class="drop-zone" data-match="Social Media Engagement Strategy">Builds a loyal brand community</div>
+        <div class="drop-zone" data-match="Influencer Partnerships">Enhances credibility through trusted voices</div>
+        <div class="drop-zone" data-match="Targeted Online Advertisements">Delivers targeted customer acquisition</div>
+      </div>
+      <p id="feedback-st1"></p>
+    </div>
+
+    <!-- Task 2: Customer Engagement Strategy (Multiple Choice) -->
+    <div id="st-task2">
+      <h3>Task 2: Customer Engagement Strategy</h3>
+      <p>Which initiative is most focused on enhancing long-term customer engagement?</p>
+      <form id="st-q2-form"></form>
+      <p id="feedback-st2"></p>
+    </div>
+
+    <!-- Task 3: Strategic Resource Allocation (Drag-and-Drop Matching) -->
+    <div id="st-task3">
+      <h3>Task 3: Strategic Resource Allocation</h3>
+      <p>TechTaste is allocating resources for sustainable growth. Drag each initiative to the resource it leverages most effectively.</p>
+      <div class="drag-container" id="drag-items-st3"></div>
+      <div class="drag-container" id="drop-zones-st3">
+        <div class="drop-zone" data-match="Digital Marketing Campaign">Utilises customer data for targeted outreach</div>
+        <div class="drop-zone" data-match="Cloud-Based Data Integration">Leverages scalable IT infrastructure</div>
+        <div class="drop-zone" data-match="Mobile App Development">Enhances user experience and retention</div>
+        <div class="drop-zone" data-match="Loyalty Programme Analytics">Optimises long-term customer insights</div>
+      </div>
+      <p id="feedback-st3"></p>
+    </div>
+
+    <!-- Task 4: Evaluating Long-Term Outcomes (Multiple Choice) -->
+    <div id="st-task4">
+      <h3>Task 4: Evaluating Long-Term Outcomes</h3>
+      <p>What is the most significant long-term benefit of leveraging Loyalty Programme Analytics?</p>
+      <form id="st-q4-form"></form>
+      <p id="feedback-st4"></p>
+    </div>
+    
+    <button onclick="checkStrategicPage()">Submit All Tasks</button>
+    <br>
+    <button onclick="goToPage('final')">Finish Challenge</button>
+    <br>
+    <button onclick="goToPage('tactical')">Back: Tactical Management</button>
+  </div>
+
+  <!-- Final Score Page -->
+  <div id="final" class="page" style="display:none;">
+    <h2>Final Score</h2>
+    <p id="finalScoreDisplay"></p>
+    <p id="finalFeedback"></p>
+    <button onclick="restartGame()">Restart Game</button>
+  </div>
+
+  <script>
+    let score = 0;
+
+    // Utility: Shuffle an array
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Navigation between pages
+    function goToPage(pageId) {
+      const pages = document.getElementsByClassName('page');
+      for (let page of pages) {
+        page.style.display = 'none';
+      }
+      if(pageId === 'final'){
+        showFinalScore();
+      }
+      document.getElementById(pageId).style.display = 'block';
+    }
+
+    // Drag and Drop Event Handlers
+    function dragStart(event) {
+      event.dataTransfer.setData("text/plain", event.target.innerText);
+    }
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+    function dropHandler(event) {
+      event.preventDefault();
+      const data = event.dataTransfer.getData("text/plain");
+      if (!event.target.classList.contains('drop-zone')) return;
+      event.target.innerText = data;
+      event.target.setAttribute('data-selected', data);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropZones = document.querySelectorAll('.drop-zone');
+      dropZones.forEach(zone => {
+        zone.addEventListener('dragover', allowDrop);
+        zone.addEventListener('drop', dropHandler);
+      });
+    });
+
+    // -----------------------------------
+    // Operational Management Tasks
+    // Task 1: Peak Hour Chaos (Drag-and-Drop Matching)
+    const opTask1Mapping = {
+      "Mobile Ordering App": "Directly captures orders to minimise errors",
+      "Digital Queue Manager": "Reduces waiting times by managing queues",
+      "Automated Kitchen Ticketing": "Improves communication between front-of-house and kitchen",
+      "Real-Time Inventory Alerts": "Alerts staff to low stock levels to prevent shortages"
+    };
+    function createOpTask1() {
+      const container = document.getElementById('drag-items-op1');
+      container.innerHTML = '';
+      let items = shuffleArray(Object.keys(opTask1Mapping));
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'draggable';
+        div.draggable = true;
+        div.innerText = item;
+        div.addEventListener('dragstart', dragStart);
+        container.appendChild(div);
+      });
+    }
+
+    // Task 2: Order Processing Efficiency (Multiple Choice)
+    const opQ2 = {
+      question: "What is the most immediate benefit of using the online ordering system?",
+      options: [
+        "Faster service and reduced errors",
+        "Enhanced long-term customer loyalty",
+        "Improved kitchen layout design",
+        "Increased social media engagement"
+      ],
+      correct: "Faster service and reduced errors"
+    };
+    function createOpTask2() {
+      const form = document.getElementById('op-q2-form');
+      form.innerHTML = '';
+      let opts = shuffleArray([...opQ2.options]);
+      opts.forEach(opt => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="radio" name="opq2" value="${opt}"> ${opt}`;
+        form.appendChild(label);
+        form.appendChild(document.createElement('br'));
+      });
+    }
+
+    // Task 3: Role Assignment in Operations (Drag-and-Drop Matching)
+    const opTask3Mapping = {
+      "Self-Service Kiosk": "Facilitates order placement",
+      "Online Ordering System": "Confirms orders and communicates with the kitchen",
+      "Digital Inventory Monitor": "Monitors stock levels in real time",
+      "Smart Payment Terminal": "Processes payments swiftly"
+    };
+    function createOpTask3() {
+      const container = document.getElementById('drag-items-op3');
+      container.innerHTML = '';
+      let items = shuffleArray(Object.keys(opTask3Mapping));
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'draggable';
+        div.draggable = true;
+        div.innerText = item;
+        div.addEventListener('dragstart', dragStart);
+        container.appendChild(div);
+      });
+    }
+
+    // Task 4: Consequence Analysis (Multiple Choice)
+    const opQ4 = {
+      question: "What could be a consequence of not implementing a Digital Inventory Monitor?",
+      options: [
+        "Stock shortages leading to unavailable menu items",
+        "Overbooking of reservations",
+        "Delayed customer payments",
+        "Reduced social media engagement"
+      ],
+      correct: "Stock shortages leading to unavailable menu items"
+    };
+    function createOpTask4() {
+      const form = document.getElementById('op-q4-form');
+      form.innerHTML = '';
+      let opts = shuffleArray([...opQ4.options]);
+      opts.forEach(opt => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="radio" name="opq4" value="${opt}"> ${opt}`;
+        form.appendChild(label);
+        form.appendChild(document.createElement('br'));
+      });
+    }
+
+    // Check all Operational tasks and update score
+    function checkOperationalPage() {
+      let pageScore = 0;
+      // Check Task 1
+      const zones1 = document.querySelectorAll('#drop-zones-op1 .drop-zone');
+      zones1.forEach(zone => {
+        const selected = zone.getAttribute('data-selected');
+        const correct = zone.getAttribute('data-match');
+        pageScore += (selected === correct) ? 10 : -5;
+      });
+      document.getElementById('feedback-op1').innerText = "Task 1: " + pageScore + " points (from drag-and-drop).";
+      
+      // Check Task 2
+      const opAnswer2 = document.querySelector('input[name="opq2"]:checked');
+      pageScore += (opAnswer2 && opAnswer2.value === opQ2.correct) ? 10 : -5;
+      document.getElementById('feedback-op2').innerText = (opAnswer2 && opAnswer2.value === opQ2.correct) ? "Task 2: Correct! +10 points." : "Task 2: Incorrect. -5 points.";
+      
+      // Check Task 3
+      const zones3 = document.querySelectorAll('#drop-zones-op3 .drop-zone');
+      zones3.forEach(zone => {
+        const selected = zone.getAttribute('data-selected');
+        const correct = zone.getAttribute('data-match');
+        pageScore += (selected === correct) ? 10 : -5;
+      });
+      document.getElementById('feedback-op3').innerText = "Task 3: Responses recorded.";
+      
+      // Check Task 4
+      const opAnswer4 = document.querySelector('input[name="opq4"]:checked');
+      pageScore += (opAnswer4 && opAnswer4.value === opQ4.correct) ? 10 : -5;
+      document.getElementById('feedback-op4').innerText = (opAnswer4 && opAnswer4.value === opQ4.correct) ? "Task 4: Correct! +10 points." : "Task 4: Incorrect. -5 points.";
+      
+      score += pageScore;
+      alert("Operational Section Score: " + pageScore + " points (Cumulative Score: " + score + ")");
+    }
+
+    // -----------------------------------
+    // Tactical Management Tasks
+    // Task 1: Optimizing Reservations (Drag-and-Drop Matching)
+    const taTask1Mapping = {
+      "Automated Reservation Confirmations": "Reduces no-shows with timely reminders",
+      "Virtual Waitlist": "Manages walk-in wait times effectively",
+      "Table Turnover Analytics": "Provides data to optimise staff scheduling",
+      "Feedback Integration": "Improves service quality through real-time feedback"
+    };
+    function createTaTask1() {
+      const container = document.getElementById('drag-items-ta1');
+      container.innerHTML = '';
+      let items = shuffleArray(Object.keys(taTask1Mapping));
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'draggable';
+        div.draggable = true;
+        div.innerText = item;
+        div.addEventListener('dragstart', dragStart);
+        container.appendChild(div);
+      });
+    }
+
+    // Task 2: Predicting Peak Times (Multiple Choice)
+    const taQ2 = {
+      question: "Which tactical advantage is achieved through data analytics in reservations?",
+      options: [
+        "Predicting peak dining times for efficient staff allocation",
+        "Reducing ingredient costs",
+        "Redesigning the restaurant layout",
+        "Enhancing long-term branding strategies"
+      ],
+      correct: "Predicting peak dining times for efficient staff allocation"
+    };
+    function createTaTask2() {
+      const form = document.getElementById('ta-q2-form');
+      form.innerHTML = '';
+      let opts = shuffleArray([...taQ2.options]);
+      opts.forEach(opt => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="radio" name="taq2" value="${opt}"> ${opt}`;
+        form.appendChild(label);
+        form.appendChild(document.createElement('br'));
+      });
+    }
+
+    // Task 3: Enhancing Customer Loyalty (Drag-and-Drop Matching)
+    const taTask3Mapping = {
+      "Customer Purchase History": "Enables targeted promotions",
+      "Automated Feedback Requests": "Identifies areas for service improvement",
+      "Loyalty Points Tracker": "Encourages repeat visits through rewards",
+      "Personalised Offer Engine": "Optimises promotion effectiveness"
+    };
+    function createTaTask3() {
+      const container = document.getElementById('drag-items-ta3');
+      container.innerHTML = '';
+      let items = shuffleArray(Object.keys(taTask3Mapping));
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'draggable';
+        div.draggable = true;
+        div.innerText = item;
+        div.addEventListener('dragstart', dragStart);
+        container.appendChild(div);
+      });
+    }
+
+    // Task 4: Digital Menu Boards Impact (Multiple Choice)
+    const taQ4 = {
+      question: "What tactical benefit do Digital Menu Boards primarily provide?",
+      options: [
+        "Real-time promotion of specials",
+        "Enhanced online ordering",
+        "Improved kitchen workflow",
+        "Better long-term inventory management"
+      ],
+      correct: "Real-time promotion of specials"
+    };
+    function createTaTask4() {
+      const form = document.getElementById('ta-q4-form');
+      form.innerHTML = '';
+      let opts = shuffleArray([...taQ4.options]);
+      opts.forEach(opt => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="radio" name="taq4" value="${opt}"> ${opt}`;
+        form.appendChild(label);
+        form.appendChild(document.createElement('br'));
+      });
+    }
+
+    // Check all Tactical tasks
+    function checkTacticalPage() {
+      let pageScore = 0;
+      // Task 1 Check
+      const zones1 = document.querySelectorAll('#drop-zones-ta1 .drop-zone');
+      zones1.forEach(zone => {
+        const selected = zone.getAttribute('data-selected');
+        const correct = zone.getAttribute('data-match');
+        pageScore += (selected === correct) ? 10 : -5;
+      });
+      document.getElementById('feedback-ta1').innerText = "Task 1: Responses recorded.";
+      
+      // Task 2 Check
+      const taAnswer2 = document.querySelector('input[name="taq2"]:checked');
+      pageScore += (taAnswer2 && taAnswer2.value === taQ2.correct) ? 10 : -5;
+      document.getElementById('feedback-ta2').innerText = (taAnswer2 && taAnswer2.value === taQ2.correct) ? "Task 2: Correct! +10 points." : "Task 2: Incorrect. -5 points.";
+      
+      // Task 3 Check
+      const zones3 = document.querySelectorAll('#drop-zones-ta3 .drop-zone');
+      zones3.forEach(zone => {
+        const selected = zone.getAttribute('data-selected');
+        const correct = zone.getAttribute('data-match');
+        pageScore += (selected === correct) ? 10 : -5;
+      });
+      document.getElementById('feedback-ta3').innerText = "Task 3: Responses recorded.";
+      
+      // Task 4 Check
+      const taAnswer4 = document.querySelector('input[name="taq4"]:checked');
+      pageScore += (taAnswer4 && taAnswer4.value === taQ4.correct) ? 10 : -5;
+      document.getElementById('feedback-ta4').innerText = (taAnswer4 && taAnswer4.value === taQ4.correct) ? "Task 4: Correct! +10 points." : "Task 4: Incorrect. -5 points.";
+      
+      score += pageScore;
+      alert("Tactical Section Score: " + pageScore + " points (Cumulative Score: " + score + ")");
+    }
+
+    // -----------------------------------
+    // Strategic Management Tasks
+    // Task 1: Expanding Market Reach (Drag-and-Drop Matching)
+    const stTask1Mapping = {
+      "Digital Marketing Campaign": "Attracts new customers and expands market reach",
+      "Social Media Engagement Strategy": "Builds a loyal brand community",
+      "Influencer Partnerships": "Enhances credibility through trusted voices",
+      "Targeted Online Advertisements": "Delivers targeted customer acquisition"
+    };
+    function createStTask1() {
+      const container = document.getElementById('drag-items-st1');
+      container.innerHTML = '';
+      let items = shuffleArray(Object.keys(stTask1Mapping));
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'draggable';
+        div.draggable = true;
+        div.innerText = item;
+        div.addEventListener('dragstart', dragStart);
+        container.appendChild(div);
+      });
+    }
+
+    // Task 2: Customer Engagement Strategy (Multiple Choice)
+    const stQ2 = {
+      question: "Which initiative is most focused on enhancing long-term customer engagement?",
+      options: [
+        "Mobile App Development",
+        "In-store Digital Signage",
+        "Automated Order Processing",
+        "Real-Time Inventory Alerts"
+      ],
+      correct: "Mobile App Development"
+    };
+    function createStTask2() {
+      const form = document.getElementById('st-q2-form');
+      form.innerHTML = '';
+      let opts = shuffleArray([...stQ2.options]);
+      opts.forEach(opt => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="radio" name="stq2" value="${opt}"> ${opt}`;
+        form.appendChild(label);
+        form.appendChild(document.createElement('br'));
+      });
+    }
+
+    // Task 3: Strategic Resource Allocation (Drag-and-Drop Matching)
+    const stTask3Mapping = {
+      "Digital Marketing Campaign": "Utilises customer data for targeted outreach",
+      "Cloud-Based Data Integration": "Leverages scalable IT infrastructure",
+      "Mobile App Development": "Enhances user experience and retention",
+      "Loyalty Programme Analytics": "Optimises long-term customer insights"
+    };
+    function createStTask3() {
+      const container = document.getElementById('drag-items-st3');
+      container.innerHTML = '';
+      let items = shuffleArray(Object.keys(stTask3Mapping));
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'draggable';
+        div.draggable = true;
+        div.innerText = item;
+        div.addEventListener('dragstart', dragStart);
+        container.appendChild(div);
+      });
+    }
+
+    // Task 4: Evaluating Long-Term Outcomes (Multiple Choice)
+    const stQ4 = {
+      question: "What is the most significant long-term benefit of leveraging Loyalty Programme Analytics?",
+      options: [
+        "Stronger customer retention and repeat business",
+        "Immediate boost in daily sales",
+        "Reduction in operational costs",
+        "Enhanced digital ordering efficiency"
+      ],
+      correct: "Stronger customer retention and repeat business"
+    };
+    function createStTask4() {
+      const form = document.getElementById('st-q4-form');
+      form.innerHTML = '';
+      let opts = shuffleArray([...stQ4.options]);
+      opts.forEach(opt => {
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="radio" name="stq4" value="${opt}"> ${opt}`;
+        form.appendChild(label);
+        form.appendChild(document.createElement('br'));
+      });
+    }
+
+    // Check all Strategic tasks
+    function checkStrategicPage() {
+      let pageScore = 0;
+      // Task 1 Check
+      const zones1 = document.querySelectorAll('#drop-zones-st1 .drop-zone');
+      zones1.forEach(zone => {
+        const selected = zone.getAttribute('data-selected');
+        const correct = zone.getAttribute('data-match');
+        pageScore += (selected === correct) ? 10 : -5;
+      });
+      document.getElementById('feedback-st1').innerText = "Task 1: Responses recorded.";
+      
+      // Task 2 Check
+      const stAnswer2 = document.querySelector('input[name="stq2"]:checked');
+      pageScore += (stAnswer2 && stAnswer2.value === stQ2.correct) ? 10 : -5;
+      document.getElementById('feedback-st2').innerText = (stAnswer2 && stAnswer2.value === stQ2.correct) ? "Task 2: Correct! +10 points." : "Task 2: Incorrect. -5 points.";
+      
+      // Task 3 Check
+      const zones3 = document.querySelectorAll('#drop-zones-st3 .drop-zone');
+      zones3.forEach(zone => {
+        const selected = zone.getAttribute('data-selected');
+        const correct = zone.getAttribute('data-match');
+        pageScore += (selected === correct) ? 10 : -5;
+      });
+      document.getElementById('feedback-st3').innerText = "Task 3: Responses recorded.";
+      
+      // Task 4 Check
+      const stAnswer4 = document.querySelector('input[name="stq4"]:checked');
+      pageScore += (stAnswer4 && stAnswer4.value === stQ4.correct) ? 10 : -5;
+      document.getElementById('feedback-st4').innerText = (stAnswer4 && stAnswer4.value === stQ4.correct) ? "Task 4: Correct! +10 points." : "Task 4: Incorrect. -5 points.";
+      
+      score += pageScore;
+      alert("Strategic Section Score: " + pageScore + " points (Cumulative Score: " + score + ")");
+    }
+
+    // -----------------------------------
+    // Final Score and Feedback
+    function showFinalScore() {
+      const finalDisplay = document.getElementById('finalScoreDisplay');
+      finalDisplay.innerText = "Your final score is: " + score + " points.";
+      const feedback = document.getElementById('finalFeedback');
+      if (score >= 250) {
+        feedback.innerText = "Outstanding performance! You have a deep understanding of how digital technologies transform management across all levels.";
+      } else if (score >= 150) {
+        feedback.innerText = "Good job! There’s room for improvement in aligning digital strategies with management goals.";
+      } else {
+        feedback.innerText = "Needs improvement. Consider reviewing the core concepts of operational, tactical, and strategic management.";
+      }
+    }
+
+    // Restart Game
+    function restartGame() {
+      score = 0;
+      // Clear all drop-zone selections and feedback messages
+      document.querySelectorAll('.drop-zone').forEach(zone => {
+        zone.removeAttribute('data-selected');
+      });
+      document.querySelectorAll('[id^="feedback-"]').forEach(el => el.innerText = "");
+      // Reinitialize all tasks
+      createOpTask1(); createOpTask2(); createOpTask3(); createOpTask4();
+      createTaTask1(); createTaTask2(); createTaTask3(); createTaTask4();
+      createStTask1(); createStTask2(); createStTask3(); createStTask4();
+      score = 0;
+      goToPage('intro');
+    }
+
+    // Initialize tasks on page load
+    window.onload = function() {
+      createOpTask1(); createOpTask2(); createOpTask3(); createOpTask4();
+      createTaTask1(); createTaTask2(); createTaTask3(); createTaTask4();
+      createStTask1(); createStTask2(); createStTask3(); createStTask4();
+    };
+  </script>
+</body>
+</html>
